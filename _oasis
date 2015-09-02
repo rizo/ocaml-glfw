@@ -1,0 +1,24 @@
+Name: OCaml GLFW
+Version: 0.1
+License: http://movvo.com
+Authors: Rizo Isrof <rizo@odis.io>
+Synopsis: GLFW bindings for OCaml
+Homepage: http://movvo.com
+OASISFormat: 0.4
+BuildTools: camlp4o,ocamlbuild
+Plugins: META (0.4), DevFiles (0.4)
+
+Library "glfw"
+    Path:         src
+    Modules:      Glfw
+    CCLib:        -lglfw3
+    Install:      true
+    BuildDepends: ctypes, ctypes.foreign
+
+Executable "test_glfw"
+    Path: test
+    MainIs: test_glfw.ml
+    CompiledObject: native
+    Install: false
+    BuildDepends: glfw, tgls.tgl4
+
