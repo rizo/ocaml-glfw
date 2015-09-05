@@ -1,0 +1,31 @@
+# OASIS_START
+# DO NOT EDIT (digest: cddd1ce4642f74e95c9557ef060f66d1)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library glfw
+"src/glfw.cmxs": use_glfw
+<src/glfw.{cma,cmxa}>: oasis_library_glfw_cclib
+<src/*.ml{,i,y}>: pkg_ctypes
+<src/*.ml{,i,y}>: pkg_ctypes.foreign
+# Executable test_glfw
+"test/test_glfw.native": pkg_ctypes
+"test/test_glfw.native": pkg_ctypes.foreign
+"test/test_glfw.native": pkg_tgls.tgl4
+"test/test_glfw.native": use_glfw
+<test/*.ml{,i,y}>: pkg_ctypes
+<test/*.ml{,i,y}>: pkg_ctypes.foreign
+<test/*.ml{,i,y}>: pkg_tgls.tgl4
+<test/*.ml{,i,y}>: use_glfw
+# OASIS_STOP
