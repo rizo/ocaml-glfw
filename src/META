@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: 70d1be49c8f813385355efe9c813ae31)
-version = "0.1.0"
+# DO NOT EDIT (digest: 7ecf518360a546872d0b78d9c121ba13)
+version = "0.2.0"
 description = "GLFW bindings for OCaml"
 requires = "ctypes ctypes.foreign"
 archive(byte) = "glfw.cma"

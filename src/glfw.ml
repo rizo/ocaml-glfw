@@ -257,9 +257,17 @@ let monitor : monitor typ = ptr void
 
 let null = Ctypes.null
 
+let cursor_pos_callback = window @-> float @-> float @-> returning void
+
 let error_callback = int @-> string @-> returning void
 
+let framebuffer_size_callback = window @-> int @-> int @-> returning void
+
 let key_callback = window @-> int @-> int @-> int @-> int @-> returning void
+
+let mouse_button_callback = window @-> int @-> int @-> int @-> returning void
+
+let scroll_callback = window @-> int @-> int @-> returning void
 
 let init =
   foreign "glfwInit" (void @-> returning int)
@@ -287,6 +295,16 @@ let set_key_callback =
   foreign "glfwSetKeyCallback" (window @-> funptr key_callback
                                        @-> returning (funptr key_callback))
 
+let set_mouse_button_callback =
+  foreign "glfwSetMouseButtonCallback"
+    (window @-> funptr mouse_button_callback
+            @-> returning (funptr mouse_button_callback))
+
+let set_scroll_callback =
+  foreign "glfwSetScrollCallback"
+    (window @-> funptr scroll_callback
+            @-> returning (funptr scroll_callback))
+
 let get_cursor_pos =
   foreign "glfwGetCursorPos"
     (window @-> ptr float @-> ptr float @-> returning void)
@@ -296,8 +314,16 @@ let get_cursor_pos w =
   get_cursor_pos w x y;
   (!@ x, !@ y)
 
+let set_cursor_pos_callback =
+  foreign "glfwSetCursorPosCallback"
+    (window @-> funptr cursor_pos_callback
+            @-> returning (funptr cursor_pos_callback))
+
 let window_should_close =
   foreign "glfwWindowShouldClose" (window @-> returning int)
+
+let set_window_should_close =
+  foreign "glfwSetWindowShouldClose" (window @-> int @-> returning void)
 
 let get_framebuffer_size =
   foreign "glfwGetFramebufferSize" (window @-> ptr int @-> ptr int
@@ -317,6 +343,10 @@ let get_window_size win =
   get_window_size win w h;
   (!@ w, !@ h)
 
+let set_framebuffer_size_callback =
+  foreign "glfwSetFramebufferSizeCallback"
+    (window @-> funptr framebuffer_size_callback
+            @-> returning (funptr framebuffer_size_callback))
 
 let swap_buffers =
   foreign "glfwSwapBuffers" (window @-> returning void)
@@ -332,6 +362,3 @@ let set_time =
 
 let get_time =
   foreign "glfwGetTime" (void @-> returning double)
-
-
-
