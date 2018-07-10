@@ -1,11 +1,11 @@
 opam-version: "1.2"
 name: "ocaml-glfw"
-version: "0.2.1"
+version: "0.2.2"
 maintainer: "Rizo Isrof <rizo@odis.io>"
 authors: "Rizo Isrof <rizo@odis.io>"
 homepage: "https://github.com/rizo/ocaml-glfw"
-bug-reports: "https://github.com/HarryGifford/ocaml-glfw/issues"
-dev-repo: "git+https://github.com/HarryGifford/ocaml-glfw.git"
+bug-reports: "https://github.com/rizo/ocaml-glfw/issues"
+dev-repo: "git+https://github.com/rizo/ocaml-glfw.git"
 license: "BSD-3-Clause"
 build: [
   ["./configure" "--prefix=%{prefix}%"]

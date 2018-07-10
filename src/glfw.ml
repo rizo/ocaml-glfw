@@ -3,8 +3,11 @@ open Ctypes
 open Foreign
 
 let version_major        = 3
-let version_minor        = 1
-let version_revision     = 2
+let version_minor        = 2
+let version_revision     = 1
+
+let true_                = 1
+let false_               = 0
 
 let release              = 0
 let press                = 1
@@ -187,6 +190,7 @@ let visible              = 0x00020004
 let decorated            = 0x00020005
 let auto_iconify         = 0x00020006
 let floating             = 0x00020007
+let maximized            = 0x00020008
 
 let red_bits             = 0x00021001
 let green_bits           = 0x00021002
@@ -206,6 +210,7 @@ let refresh_rate         = 0x0002100F
 let doublebuffer         = 0x00021010
 
 let client_api               = 0x00022001
+let context_creation_api     = 0x0002200B
 let context_version_major    = 0x00022002
 let context_version_minor    = 0x00022003
 let context_revision         = 0x00022004
@@ -217,6 +222,10 @@ let context_release_behavior = 0x00022009
 
 let opengl_api             = 0x00030001
 let opengl_es_api          = 0x00030002
+
+let native_context_api     = 0x00036001
+let egl_context_api        = 0x00036002
+let osmesa_context_api     = 0x00036003
 
 let no_robustness          =          0
 let no_reset_notification  = 0x00031001
@@ -274,6 +283,21 @@ let init =
 
 let set_error_callback =
   foreign "glfwSetErrorCallback" (funptr error_callback @-> returning void)
+
+let get_primary_monitor =
+  foreign "glfwGetPrimaryMonitor" (void @-> returning monitor)
+
+let get_monitors =
+  foreign "glfwGetMonitors" (ptr int @-> returning (ptr monitor))
+let get_monitors () =
+  let n_ptr = allocate int 0 in
+  let monitors = get_monitors n_ptr in
+  let n = !@ n_ptr in
+  (* n = 0 indicates an error. *)
+  if n > 0 then CArray.(to_list (from_ptr monitors n)) else []
+
+let get_monitor_name =
+  foreign "glfwGetMonitorName" (monitor @-> returning string)
 
 let window_hint =
   foreign "glfwWindowHint" (int @-> int @-> returning void)
@@ -343,10 +367,17 @@ let get_window_size win =
   get_window_size win w h;
   (!@ w, !@ h)
 
+let set_window_size =
+  foreign "glfwSetWindowSize" (window @-> int @-> int @-> returning void)
+
 let set_framebuffer_size_callback =
   foreign "glfwSetFramebufferSizeCallback"
     (window @-> funptr framebuffer_size_callback
             @-> returning (funptr framebuffer_size_callback))
+
+let set_window_aspect_ratio =
+  foreign "glfwSetWindowAspectRatio"
+    (window @-> int @-> int @-> returning void)
 
 let swap_buffers =
   foreign "glfwSwapBuffers" (window @-> returning void)
