@@ -1,6 +1,4 @@
 
 # OCaml GLFW
 
-_Work in progress._
-
-This package provides OCaml bindings for [GLFW](http://www.glfw.org).
+See https://github.com/SylvainBoilard/GLFW-OCaml
